@@ -46,7 +46,7 @@
         <dependency>
             <groupId>com.tdoer</groupId>
             <artifactId>tdoer-bedrock-impl</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.0.1-RELEASE</version>
         </dependency>
         <!-- feign -->
         <dependency>
