@@ -1,2 +1,6 @@
 /.idea/
 /tdoer-service-interfaces.iml
+.settings
+.project
+/target
+/bin
