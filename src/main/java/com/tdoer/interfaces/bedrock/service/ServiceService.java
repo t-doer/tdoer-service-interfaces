@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -35,19 +36,42 @@ import java.util.List;
 @RequestMapping("/bedrock/service")
 public interface ServiceService {
 
-    @GetMapping("/{serviceId}")
+    @GetMapping("/definition/byId/{serviceId}")
     GenericResponseData<ServiceDefinition> getServiceDefinition(
-            @PathVariable("serviceId") String serviceId);
+            @PathVariable("serviceId") Long serviceId);
+
+    @GetMapping("/definition/byCode/{serviceId}")
+    GenericResponseData<ServiceDefinition> getServiceDefinition(
+            @PathVariable("serviceCode") String serviceCode);
 
     @GetMapping("/{serviceId}/methods")
-    GenericResponseData<List<ServiceMethodDefinition>> getServiceMethodDefinitions(
-            @PathVariable("serviceId") @NotBlank String serviceId,
-            @RequestParam("productId") String productId,
-            @RequestParam("clientId") String clientId,
-            @RequestParam("tenantId") Long tenantId,
-            @RequestParam("contextPath") String contextPath);
+    GenericResponseData<List<ServiceMethodDefinition>> getAllServiceMethodDefinitions(
+            @PathVariable("serviceId") Long serviceId);
 
-    @GetMapping("/method/{methodId}")
-    GenericResponseData<ServiceMethodDefinition> getServiceMethodDefinition(
-            @PathVariable("methodId") Long methodId);
+
+    @GetMapping("/{serviceId}/customizedMethodIds")
+    GenericResponseData<List<Long>> getCustomizedServiceMethodIds(
+            @PathVariable("serviceId") @NotNull Long serviceId,
+            @RequestParam("applicationId") @NotNull Long applicationId,
+            @RequestParam("productId") @NotNull Long productId,
+            @RequestParam("clientId") @NotNull Long clientId,
+            @RequestParam("tenantId") @NotNull Long tenantId,
+            @RequestParam("contextPath")  String contextPath);
+
+    @GetMapping("{serviceId}/commonMethodIds")
+    GenericResponseData<List<Long>> getCommonServiceMethodIds(
+            @PathVariable("serviceId") @NotNull Long serviceId);
+
+
+    @GetMapping("{serviceId}/refererClientIds")
+    GenericResponseData<List<Long>> getRefererClientIds(Long serviceId);
+
+    @GetMapping("{serviceId}/refererApplicationIds")
+    GenericResponseData<List<Long>> getRefererApplicationIds(Long serviceId);
+
+    @GetMapping("{serviceId}/refererServiceIds")
+    GenericResponseData<List<Long>> getRefererServiceIds(Long serviceId);
+
+    @GetMapping("{serviceId}/refereeServiceIds")
+    GenericResponseData<List<Long>> getRefereeServiceIds(Long serviceId);
 }

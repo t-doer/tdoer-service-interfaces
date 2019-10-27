@@ -15,10 +15,9 @@
  */
 package com.tdoer.interfaces.config;
 
-import com.tdoer.bedrock.CloudConstants;
 import com.tdoer.bedrock.CloudEnvironment;
 import com.tdoer.bedrock.CloudEnvironmentHolder;
-import com.tdoer.bedrock.EnvironmentDigest;
+import com.tdoer.bedrock.PlatformConstants;
 import feign.Feign;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -40,7 +39,7 @@ public class FeignClientAutoConfiguration {
         return Feign.builder().requestInterceptor((template) -> {
             CloudEnvironment env = CloudEnvironmentHolder.getEnvironment();
             if (env != null) {
-                template.header(CloudConstants.ENVIRONMENT_DIGEST,
+                template.header(PlatformConstants.ENVIRONMENT_DIGEST,
                         env.getDigest().toDigestString());
             }
         });

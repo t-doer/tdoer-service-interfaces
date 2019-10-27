@@ -36,40 +36,29 @@ import java.util.List;
 @RequestMapping("/bedrock/tenant")
 public interface TenantService {
 
-    @GetMapping("")
-    GenericResponseData<List<TenantDefinition>> getTenantDefinitions();
-
-    @GetMapping("/{tenantId}")
-    GenericResponseData<TenantDefinition> getTenantDefinition(
+    @GetMapping("／definition/byId/{tenantId}")
+    GenericResponseData<TenantDefinition> getTenantDefinitionById(
             @PathVariable("tenantId") @NotNull Long tenantId);
 
-    @GetMapping("/byCode/{tenantCode}")
-    GenericResponseData<TenantDefinition> getTenantDefinition(
+    @GetMapping("/definition/byCode/{tenantCode}")
+    GenericResponseData<TenantDefinition> getTenantDefinitionByCode(
             @PathVariable("tenantCode") @NotBlank String tenantCode);
+
+
+    @GetMapping("/definition/byGuid/{guid}")
+    GenericResponseData<TenantDefinition> getTenantDefinitionByGuid(
+            @PathVariable("guid") @NotBlank String guid);
 
     @GetMapping("/{tenantId}/products")
     GenericResponseData<List<TenantProductDefinition>> getTenantProductDefinitions(
             @PathVariable("tenantId") @NotNull Long tenantId);
 
-    @GetMapping("/{tenantId}/product/{productId}")
-    GenericResponseData<TenantProductDefinition> getTenantProductDefinition(
-            @PathVariable("productId") @NotBlank String productId,
+    @GetMapping("/{tenantId}/clients")
+    GenericResponseData<List<TenantClientDefinition>> getTenantClientDefinitions(
             @PathVariable("tenantId") @NotNull Long tenantId);
 
     @GetMapping("/clientByHost/{host}")
     GenericResponseData<TenantClientDefinition> getTenantClientDefinition(
             @PathVariable("host") @NotBlank String host);
 
-    @GetMapping("/{tenantId}/client/{clientId}")
-    GenericResponseData<TenantClientDefinition> getTenantClientDefinition(
-            @PathVariable("clientId") @NotBlank String clientId,
-            @PathVariable("tenantId") @NotNull Long tenantId);
-
-    @GetMapping("/{tenantId}/productIds")
-    GenericResponseData<List<String>> getProductIds(
-            @PathVariable("tenantId") @NotNull Long tenantId);
-
-    @GetMapping("/{tenantId}/clientIds")
-    GenericResponseData<List<String>> getClientIds(
-            @PathVariable("tenantId") @NotNull Long tenantId);
 }

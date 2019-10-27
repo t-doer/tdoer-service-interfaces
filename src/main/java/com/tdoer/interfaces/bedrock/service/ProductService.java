@@ -32,39 +32,36 @@ import java.util.List;
 @RequestMapping("/bedrock/product")
 public interface ProductService {
 
-    @GetMapping("/{productId}")
+    @GetMapping("/definition/byId/{productId}")
     GenericResponseData<ProductDefinition> getProductDefinition(
-            @PathVariable("productId") @NotBlank String productId);
+            @PathVariable("productId") @NotNull Long productId);
 
-    @GetMapping("/client/{clientId}")
-    GenericResponseData<ClientDefinition> getClientDefinition(
-            @PathVariable("clientId") @NotBlank String clientId);
+    @GetMapping("/definition/byCode/{productId}")
+    GenericResponseData<ProductDefinition> getProductDefinition(
+            @PathVariable("productCode") @NotBlank String productCode);
 
-    @GetMapping("/{productId}/clientIds")
-    GenericResponseData<List<String>> getClientIds(
-            @PathVariable("productId") @NotBlank String productId);
-
-    @GetMapping("/{productId}/client/{clientId}/applications")
-    GenericResponseData<List<ClientApplicationDefinition>> getClientApplicationDefinitions(
-            @PathVariable("productId") @NotBlank String productId,
-            @PathVariable("clientId") @NotBlank String clientId,
-            @RequestParam("tenantId") Long tenantId);
-
-    @GetMapping("/{productId}/client/{clientId}/services")
-    GenericResponseData<List<ClientServiceDefinition>> getClientServiceDefinitions(
-            @PathVariable("productId") @NotBlank String productId,
-            @PathVariable("clientId") @NotBlank String clientId,
-            @RequestParam("tenantId") Long tenantId);
-
-    @GetMapping("/{productId}/client/{clientId}/contexts")
-    GenericResponseData<List<ClientContextDefinition>> getClientContextDefinitions(
-            @PathVariable("productId") @NotBlank String productId,
-            @PathVariable("clientId") @NotBlank String clientId,
-            @RequestParam("tenantId") Long tenantId);
+    @GetMapping("{productId}/clientDefinitons")
+    GenericResponseData<List<ClientDefinition>> getClientDefinitions(
+            @PathVariable("productId") @NotNull Long productId);
 
     @GetMapping("/client/{clientId}/tenant/{tenantId}/token")
     GenericResponseData<ClientTokenDefinition> getClientTokenDefinition(
-            @PathVariable("clientId") @NotBlank String clientId,
+            @PathVariable("clientId") @NotNull Long clientId,
+            @RequestParam("tenantId") @NotNull Long tenantId);
+
+    @GetMapping("/{productId}/client/{clientId}/applications")
+    GenericResponseData<List<ClientApplicationDefinition>> getClientApplicationDefinitions(
+            @PathVariable("clientId") @NotNull Long clientId,
+            @RequestParam("tenantId") @NotNull Long tenantId);
+
+    @GetMapping("/{productId}/client/{clientId}/services")
+    GenericResponseData<List<ClientServiceDefinition>> getClientServiceDefinitions(
+            @PathVariable("clientId") @NotNull Long clientId,
+            @RequestParam("tenantId") @NotNull Long tenantId);
+
+    @GetMapping("/{productId}/client/{clientId}/contexts")
+    GenericResponseData<List<ClientContextDefinition>> getClientContextDefinitions(
+            @PathVariable("clientId") @NotNull Long clientId,
             @RequestParam("tenantId") @NotNull Long tenantId);
 
 }

@@ -34,40 +34,39 @@ public class ProductServiceDelegate implements ProductProvider {
     ProductService proxy;
 
     @Override
-    public ProductDefinition getProductDefinition(String productId) {
-
+    public ProductDefinition getProductDefinition(Long productId) {
         return proxy.getProductDefinition(productId).getData();
     }
 
     @Override
-    public ClientDefinition getClientDefinition(String clientId) {
-        return proxy.getClientDefinition(clientId).getData();
+    public ProductDefinition getProductDefinition(String productCode) {
+
+        return proxy.getProductDefinition(productCode).getData();
     }
 
     @Override
-    public List<String> getClientIds(String productId) {
-
-        return proxy.getClientIds(productId).getData();
+    public List<ClientDefinition> getClientDefinitions(Long productId) {
+        return proxy.getClientDefinitions(productId).getData();
     }
 
     @Override
-    public List<ClientApplicationDefinition> getClientApplicationDefinitions(String productId, String clientId, Long tenantId) {
-        return proxy.getClientApplicationDefinitions(productId, clientId, tenantId).getData();
-    }
-
-    @Override
-    public List<ClientServiceDefinition> getClientServiceDefinitions(String productId, String clientId, Long tenantId) {
-        return proxy.getClientServiceDefinitions(productId, clientId, tenantId).getData();
-    }
-
-    @Override
-    public List<ClientContextDefinition> getClientContextDefinitions(String productId, String clientId, Long tenantId) {
-        return proxy.getClientContextDefinitions(productId, clientId, tenantId).getData();
-    }
-
-    @Override
-    public ClientTokenDefinition getClientTokenDefinition(String clientId, Long tenantId) {
-
+    public ClientTokenDefinition getClientTokenDefinition(Long clientId, Long tenantId) {
         return proxy.getClientTokenDefinition(clientId, tenantId).getData();
     }
+
+    @Override
+    public List<ClientApplicationDefinition> getClientApplicationDefinitions(Long clientId, Long tenantId) {
+        return proxy.getClientApplicationDefinitions(clientId, tenantId).getData();
+    }
+
+    @Override
+    public List<ClientServiceDefinition> getClientServiceDefinitions(Long clientId, Long tenantId) {
+        return proxy.getClientServiceDefinitions(clientId, tenantId).getData();
+    }
+
+    @Override
+    public List<ClientContextDefinition> getClientContextDefinitions(Long clientId, Long tenantId) {
+        return proxy.getClientContextDefinitions(clientId, tenantId).getData();
+    }
+
 }

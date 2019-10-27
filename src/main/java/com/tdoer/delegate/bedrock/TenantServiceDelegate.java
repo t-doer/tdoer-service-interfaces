@@ -36,56 +36,32 @@ public class TenantServiceDelegate implements TenantProvider {
     TenantService proxy;
 
     @Override
-    public List<TenantDefinition> getTenantDefinitions() {
-
-        return proxy.getTenantDefinitions().getData();
+    public TenantDefinition getTenantDefinitionById(Long tenantId) {
+        return proxy.getTenantDefinitionById(tenantId).getData();
     }
 
     @Override
-    public TenantDefinition getTenantDefinition(Long tenantId) {
-
-        return proxy.getTenantDefinition(tenantId).getData();
+    public TenantDefinition getTenantDefinitionByCode(String tenantCode) {
+        return proxy.getTenantDefinitionByCode(tenantCode).getData();
     }
 
     @Override
-    public TenantDefinition getTenantDefinition(String tenantCode) {
-
-        return proxy.getTenantDefinition(tenantCode).getData();
+    public TenantDefinition getTenantDefinitionByGuid(String guid) {
+        return proxy.getTenantDefinitionByGuid(guid).getData();
     }
 
     @Override
     public List<TenantProductDefinition> getTenantProductDefinitions(Long tenantId) {
-
         return proxy.getTenantProductDefinitions(tenantId).getData();
     }
 
     @Override
-    public TenantProductDefinition getTenantProductDefinition(String productId, Long tenantId) {
-
-        return proxy.getTenantProductDefinition(productId, tenantId).getData();
+    public List<TenantClientDefinition> getTenantClientDefinitions(Long tenantId) {
+        return proxy.getTenantClientDefinitions(tenantId).getData();
     }
 
     @Override
     public TenantClientDefinition getTenantClientDefinition(String host) {
-
         return proxy.getTenantClientDefinition(host).getData();
-    }
-
-    @Override
-    public TenantClientDefinition getTenantClientDefinition(String clientId, Long tenantId) {
-
-        return proxy.getTenantClientDefinition(clientId, tenantId).getData();
-    }
-
-    @Override
-    public List<String> getProductIds(Long tenantId) {
-
-        return proxy.getProductIds(tenantId).getData();
-    }
-
-    @Override
-    public List<String> getClientIds(Long tenantId) {
-
-        return proxy.getClientIds(tenantId).getData();
     }
 }

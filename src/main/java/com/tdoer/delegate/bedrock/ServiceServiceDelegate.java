@@ -34,17 +34,48 @@ public class ServiceServiceDelegate implements ServiceProvider {
     private ServiceService proxy;
 
     @Override
-    public ServiceDefinition getServiceDefinition(String serviceId) {
+    public ServiceDefinition getServiceDefinition(Long serviceId) {
         return proxy.getServiceDefinition(serviceId).getData();
     }
 
     @Override
-    public List<ServiceMethodDefinition> getServiceMethodDefinitions(String serviceId, String productId, String clientId, Long tenantId, ContextPath contextPath) {
-        return proxy.getServiceMethodDefinitions(serviceId, productId, clientId, tenantId, contextPath.getAbsoluteValue()).getData();
+    public ServiceDefinition getServiceDefinition(String serviceCode) {
+        return proxy.getServiceDefinition(serviceCode).getData();
     }
 
     @Override
-    public ServiceMethodDefinition getServiceMethodDefinition(Long methodId) {
-        return proxy.getServiceMethodDefinition(methodId).getData();
+    public List<ServiceMethodDefinition> getAllServiceMethodDefinitions(Long serviceId) {
+        return proxy.getAllServiceMethodDefinitions(serviceId).getData();
     }
+
+    @Override
+    public List<Long> getCustomizedServiceMethodIds(Long serviceId, Long applicationId, Long productId, Long clientId, Long tenantId, String contextPath) {
+        return proxy.getCustomizedServiceMethodIds(serviceId, applicationId, productId, clientId, tenantId, contextPath).getData();
+    }
+
+    @Override
+    public List<Long> getCommonServiceMethodIds(Long serviceId) {
+        return proxy.getCommonServiceMethodIds(serviceId).getData();
+    }
+
+    @Override
+    public List<Long> getRefererClientIds(Long serviceId) {
+        return proxy.getRefererClientIds(serviceId).getData();
+    }
+
+    @Override
+    public List<Long> getRefererApplicationIds(Long serviceId) {
+        return proxy.getRefererApplicationIds(serviceId).getData();
+    }
+
+    @Override
+    public List<Long> getRefererServiceIds(Long serviceId) {
+        return proxy.getRefererServiceIds(serviceId).getData();
+    }
+
+    @Override
+    public List<Long> getRefereeServiceIds(Long serviceId) {
+        return proxy.getRefereeServiceIds(serviceId).getData();
+    }
+
 }

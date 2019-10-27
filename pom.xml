@@ -7,13 +7,13 @@
     <parent>
         <groupId>com.tdoer</groupId>
         <artifactId>tdoer-parent-pom</artifactId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.0.4-RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.tdoer</groupId>
     <artifactId>tdoer-service-interfaces</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>T-Doer Service Interfaces</name>
     <description>The interfaces which are called between services</description>
@@ -45,8 +45,13 @@
         </dependency>
         <dependency>
             <groupId>com.tdoer</groupId>
+            <artifactId>tdoer-bedrock</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tdoer</groupId>
             <artifactId>tdoer-bedrock-impl</artifactId>
-            <version>1.0.1-RELEASE</version>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
         <!-- feign -->
         <dependency>

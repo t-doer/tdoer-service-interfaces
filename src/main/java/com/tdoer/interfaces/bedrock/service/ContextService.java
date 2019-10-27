@@ -52,19 +52,6 @@ public interface ContextService {
             @RequestParam("clientId") String clientId,
             @RequestParam("tenantId") Long tenantId);
 
-    @GetMapping("/{contextPath}/publicAuthorities")
-    GenericResponseData<List<PublicAuthorityDefinition>> getPublicAuthorities(
-            @PathVariable("contextPath") @NotBlank String contextPath,
-            @RequestParam("productId") String productId,
-            @RequestParam("clientId") String clientId,
-            @RequestParam("tenantId") Long tenantId);
-
-
-    @GetMapping("/{contextPath}/role/{roleId}/roleAuthorities")
-    GenericResponseData<List<ContextRoleAuthorityDefinition>> getContextRoleAuthorities(
-            @PathVariable("contextPath") @NotBlank String contextPath,
-            @PathVariable("roleId") Long roleId);
-
     @GetMapping("/{contextPath}/instance")
     GenericResponseData<ContextInstanceDefinition> getContextInstance(
             @PathVariable("contextPath") @NotBlank String contextPath);

@@ -15,10 +15,7 @@
  */
 package com.tdoer.interfaces.bedrock.service;
 
-import com.tdoer.bedrock.impl.definition.application.ActionDefinition;
-import com.tdoer.bedrock.impl.definition.application.ApplicationDefinition;
-import com.tdoer.bedrock.impl.definition.application.ApplicationServiceDefinition;
-import com.tdoer.bedrock.impl.definition.application.PageDefinition;
+import com.tdoer.bedrock.impl.definition.application.*;
 import com.tdoer.springboot.rest.GenericResponseData;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,48 +31,74 @@ import java.util.List;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient("tdoer-core-data")
+@FeignClient("tdoer-bedrock-serviceprovider")
 @RequestMapping("/bedrock/application")
 public interface ApplicationService {
 
 
-    @GetMapping("/{applicationId}")
-    GenericResponseData<ApplicationDefinition> getApplicationDefinition(
-            @PathVariable("applicationId") @NotBlank String applicationId);
+    @GetMapping("/definition/byId/{applicationId}")
+    GenericResponseData<ApplicationDefinition> getApplicationDefinitionById(
+            @PathVariable("applicationId") @NotNull Long applicationId);
 
-    @GetMapping("/{applicationId}/pages")
-    GenericResponseData<List<PageDefinition>> getPageDefinitions(
-            @PathVariable("applicationId") @NotBlank String applicationId,
-            @RequestParam("productId") String productId,
-            @RequestParam("clientId") String clientId,
-            @RequestParam("tenantId") Long tenantId,
-            @RequestParam("contextPath") String contextPath);
 
-    @GetMapping("/{applicationId}/actions")
-    GenericResponseData<List<ActionDefinition>> getActionDefinitions(
-            @PathVariable("applicationId") @NotBlank String applicationId,
-            @RequestParam("productId") String productId,
-            @RequestParam("clientId") String clientId,
-            @RequestParam("tenantId") Long tenantId,
-            @RequestParam("contextPath") String contextPath);
+    @GetMapping("/definition/byCode/{applicationCode}")
+    GenericResponseData<ApplicationDefinition> getApplicationDefinitionByCode(
+            @PathVariable("applicationCode") @NotBlank String applicationCode);
 
-    @GetMapping("/{applicationId}/services")
-    GenericResponseData<List<ApplicationServiceDefinition>> getApplicationServiceDefinitions(
-            @PathVariable("applicationId") @NotBlank String applicationId,
-            @RequestParam("productId") String productId,
-            @RequestParam("clientId") String clientId,
-            @RequestParam("tenantId") Long tenantId,
-            @RequestParam("contextPath") String contextPath);
+    @GetMapping("/{applicationId}/pageDefinitions")
+    GenericResponseData<List<PageDefinition>> getAllPageDefinitions(
+            @PathVariable("applicationId") @NotBlank Long applicationId);
 
-    @GetMapping("/{applicationId}/page/{pageId}/methodIds")
-    GenericResponseData<List<Long>> getServiceMethodIdsOfPage(
-            @PathVariable("applicationId") @NotBlank String applicationId,
+    @GetMapping("/{applicationId}/customizedPageIds")
+    GenericResponseData<List<Long>> getCustomizedPageIds(
+            @PathVariable("applicationId") @NotNull Long applicationId,
+            @RequestParam("productId") @NotNull Long productId,
+            @RequestParam("clientId") @NotNull Long clientId,
+            @RequestParam("tenantId") @NotNull Long tenantId,
+            @RequestParam("contextPath") @NotNull String contextPath);
+
+    @GetMapping("/{applicationId}/commonPageIds")
+    GenericResponseData<List<Long>> getCommonPageIds(
+            @PathVariable("applicationId") @NotBlank Long applicationId);
+
+    @GetMapping("{pageId}/actionDefinitions")
+    GenericResponseData<List<ActionDefinition>> getAllActionDefinitions(
             @PathVariable("pageId") @NotNull Long pageId);
 
-    @GetMapping("/{applicationId}/page/{pageId}/action/{actionId}/methodIds")
-    GenericResponseData<List<Long>> getServiceMethodIdsOfAction(
-            @PathVariable("applicationId") @NotBlank String applicationId,
-            @PathVariable("pageId") @NotNull Long pageId,
-            @PathVariable("actionId") @NotNull Long actionId);
+    @GetMapping("/{pageId}/customizedActionIds")
+    GenericResponseData<List<ActionDefinition>> getCustomizedActionIds(
+            @PathVariable("pageId") @NotNull String pageId,
+            @RequestParam("productId") @NotNull Long productId,
+            @RequestParam("clientId") @NotNull Long clientId,
+            @RequestParam("tenantId") @NotNull Long tenantId,
+            @RequestParam("contextPath") String contextPath);
 
+    @GetMapping("{pageId}/commonActionIds")
+    GenericResponseData<List<Long>> getCommonActionIds(
+            @PathVariable("pageId") @NotNull Long pageId);
+
+
+    @GetMapping("{applicationId}/customizedRefereeServiceIds")
+    GenericResponseData<List<Long>> getCustomizedRefereeServiceIds(
+            @PathVariable("applicationId") @NotBlank Long applicationId,
+            @RequestParam("productId") @NotNull Long productId,
+            @RequestParam("clientId") @NotNull Long clientId,
+            @RequestParam("tenantId") @NotNull Long tenantId,
+            @RequestParam("contextPath") String contextPath);
+
+    @GetMapping("{applicationId}/commonRefereeServiceIds")
+    GenericResponseData<List<Long>> getCommonRefereeServiceIds(
+            @PathVariable("applicationId") @NotNull Long applicationId);
+
+    @GetMapping("{applicationId}/refereeServiceIds")
+    GenericResponseData<List<Long>> getAllRefereeServiceIds(
+            @PathVariable("applicationId") @NotNull Long applicationId);
+
+    @GetMapping("{pageId}/pageMethodDefinitions")
+    GenericResponseData<List<PageMethodDefinition>> getPageMethodDefinitions(
+            @PathVariable("pageId") @NotNull Long pageId);
+
+    @GetMapping("{actionId}/actionMethodDefinitions")
+    GenericResponseData<List<ActionMethodDefinition>> getActionMethodDefinitions(
+            @PathVariable("actionId") @NotNull Long actionId);
 }

@@ -15,11 +15,7 @@
  */
 package com.tdoer.delegate.bedrock;
 
-import com.tdoer.bedrock.context.ContextPath;
-import com.tdoer.bedrock.impl.definition.application.ActionDefinition;
-import com.tdoer.bedrock.impl.definition.application.ApplicationDefinition;
-import com.tdoer.bedrock.impl.definition.application.ApplicationServiceDefinition;
-import com.tdoer.bedrock.impl.definition.application.PageDefinition;
+import com.tdoer.bedrock.impl.definition.application.*;
 import com.tdoer.bedrock.impl.provider.ApplicationProvider;
 import com.tdoer.interfaces.bedrock.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,32 +34,67 @@ public class ApplicationServiceDelegate implements ApplicationProvider {
     ApplicationService proxy;
 
     @Override
-    public ApplicationDefinition getApplicationDefinition(String applicationId) {
-        return proxy.getApplicationDefinition(applicationId).getData();
+    public ApplicationDefinition getApplicationDefinitionById(Long applicationId) {
+        return proxy.getApplicationDefinitionById(applicationId).getData();
     }
 
     @Override
-    public List<PageDefinition> getPageDefinitions(String applicationId, String productId, String clientId, Long tenantId, ContextPath contextPath) {
-        return proxy.getPageDefinitions(applicationId, productId, clientId, tenantId, contextPath.getAbsoluteValue()).getData();
+    public ApplicationDefinition getApplicationDefinitionByCode(String applicationCode) {
+        return proxy.getApplicationDefinitionByCode(applicationCode).getData();
     }
 
     @Override
-    public List<ActionDefinition> getActionDefinitions(String applicationId, String productId, String clientId, Long tenantId, ContextPath contextPath) {
-        return proxy.getActionDefinitions(applicationId, productId, clientId, tenantId, contextPath.getAbsoluteValue()).getData();
+    public List<PageDefinition> getAllPageDefinitions(Long applicationId) {
+        return proxy.getAllPageDefinitions(applicationId).getData();
     }
 
     @Override
-    public List<ApplicationServiceDefinition> getApplicationServiceDefinitions(String applicationId, String productId, String clientId, Long tenantId, ContextPath contextPath) {
-        return proxy.getApplicationServiceDefinitions(applicationId, productId, clientId, tenantId, contextPath.getAbsoluteValue()).getData();
+    public List<Long> getCustomizedPageIds(Long applicationId, Long productId, Long clientId, Long tenantId, String contextPath) {
+        return proxy.getCustomizedPageIds(applicationId, productId, clientId, tenantId, contextPath).getData();
     }
 
     @Override
-    public List<Long> getServiceMethodIdsOfPage(String applicationId, Long pageId) {
-        return proxy.getServiceMethodIdsOfPage(applicationId, pageId).getData();
+    public List<Long> getCommonPageIds(Long applicationId) {
+        return proxy.getCommonPageIds(applicationId).getData();
     }
 
     @Override
-    public List<Long> getServiceMethodIdsOfAction(String applicationId, Long pageId, Long actionId) {
-        return proxy.getServiceMethodIdsOfAction(applicationId, pageId, actionId).getData();
+    public List<ActionDefinition> getAllActionDefinitions(Long pageId) {
+        return proxy.getAllActionDefinitions(pageId).getData();
+    }
+
+    @Override
+    public List<Long> getCustomizedActionIds(Long pageId, Long productId, Long clientId, Long tenantId, String contextPath) {
+        return proxy.getCustomizedPageIds(pageId, productId, clientId, tenantId, contextPath).getData();
+    }
+
+    @Override
+    public List<Long> getCommonActionIds(Long pageId) {
+        return proxy.getCommonActionIds(pageId).getData();
+    }
+
+    @Override
+    public List<Long> getCustomizedRefereeServiceIds(Long applicationId, Long productId, Long clientId, Long tenantId, String contextPath) {
+        return proxy.getCustomizedRefereeServiceIds(applicationId, productId, clientId, tenantId, contextPath).getData();
+    }
+
+    @Override
+    public List<Long> getCommonRefereeServiceIds(Long applicationId) {
+        return proxy.getCommonRefereeServiceIds(applicationId).getData();
+    }
+
+    @Override
+    public List<Long> getAllRefereeServiceIds(Long applicationId) {
+        return proxy.getAllRefereeServiceIds(applicationId).getData();
+    }
+
+    @Override
+    public List<PageMethodDefinition> getPageMethodDefinitions(Long pageId) {
+        return proxy.getPageMethodDefinitions(pageId).getData();
+    }
+
+    @Override
+    public List<ActionMethodDefinition> getActionMethodDefinitions(Long actionId) {
+        return proxy.getActionMethodDefinitions(actionId).getData();
     }
 }
