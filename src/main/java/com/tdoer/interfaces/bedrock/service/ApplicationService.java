@@ -47,7 +47,7 @@ public interface ApplicationService {
 
     @GetMapping("/{applicationId}/pageDefinitions")
     GenericResponseData<List<PageDefinition>> getAllPageDefinitions(
-            @PathVariable("applicationId") @NotBlank Long applicationId);
+            @PathVariable("applicationId") @NotNull Long applicationId);
 
     @GetMapping("/{applicationId}/customizedPageIds")
     GenericResponseData<List<Long>> getCustomizedPageIds(
@@ -59,7 +59,7 @@ public interface ApplicationService {
 
     @GetMapping("/{applicationId}/commonPageIds")
     GenericResponseData<List<Long>> getCommonPageIds(
-            @PathVariable("applicationId") @NotBlank Long applicationId);
+            @PathVariable("applicationId") @NotNull Long applicationId);
 
     @GetMapping("{pageId}/actionDefinitions")
     GenericResponseData<List<ActionDefinition>> getAllActionDefinitions(
@@ -71,7 +71,7 @@ public interface ApplicationService {
             @RequestParam("productId") @NotNull Long productId,
             @RequestParam("clientId") @NotNull Long clientId,
             @RequestParam("tenantId") @NotNull Long tenantId,
-            @RequestParam("contextPath") String contextPath);
+            @RequestParam("contextPath") @NotNull String contextPath);
 
     @GetMapping("{pageId}/commonActionIds")
     GenericResponseData<List<Long>> getCommonActionIds(
@@ -80,11 +80,11 @@ public interface ApplicationService {
 
     @GetMapping("{applicationId}/customizedRefereeServiceIds")
     GenericResponseData<List<Long>> getCustomizedRefereeServiceIds(
-            @PathVariable("applicationId") @NotBlank Long applicationId,
+            @PathVariable("applicationId") @NotNull Long applicationId,
             @RequestParam("productId") @NotNull Long productId,
             @RequestParam("clientId") @NotNull Long clientId,
             @RequestParam("tenantId") @NotNull Long tenantId,
-            @RequestParam("contextPath") String contextPath);
+            @RequestParam("contextPath") @NotBlank String contextPath);
 
     @GetMapping("{applicationId}/commonRefereeServiceIds")
     GenericResponseData<List<Long>> getCommonRefereeServiceIds(
