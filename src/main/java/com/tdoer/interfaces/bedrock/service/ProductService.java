@@ -28,7 +28,7 @@ import java.util.List;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient(value = "tdoer-core-data")
+@FeignClient(value = "tdoer-bedrock-serviceprovider")
 @RequestMapping("/bedrock/product")
 public interface ProductService {
 
@@ -36,7 +36,7 @@ public interface ProductService {
     GenericResponseData<ProductDefinition> getProductDefinition(
             @PathVariable("productId") @NotNull Long productId);
 
-    @GetMapping("/definition/byCode/{productId}")
+    @GetMapping("/definition/byCode/{productCode}")
     GenericResponseData<ProductDefinition> getProductDefinition(
             @PathVariable("productCode") @NotBlank String productCode);
 
@@ -49,17 +49,17 @@ public interface ProductService {
             @PathVariable("clientId") @NotNull Long clientId,
             @RequestParam("tenantId") @NotNull Long tenantId);
 
-    @GetMapping("/{productId}/client/{clientId}/applications")
+    @GetMapping("/client/{clientId}/tenant/{tenantId}/applications")
     GenericResponseData<List<ClientApplicationDefinition>> getClientApplicationDefinitions(
             @PathVariable("clientId") @NotNull Long clientId,
             @RequestParam("tenantId") @NotNull Long tenantId);
 
-    @GetMapping("/{productId}/client/{clientId}/services")
+    @GetMapping("/client/{clientId}/tenant/{tenantId}/services")
     GenericResponseData<List<ClientServiceDefinition>> getClientServiceDefinitions(
             @PathVariable("clientId") @NotNull Long clientId,
             @RequestParam("tenantId") @NotNull Long tenantId);
 
-    @GetMapping("/{productId}/client/{clientId}/contexts")
+    @GetMapping("/client/{clientId}/tenant/{tenantId}/contexts")
     GenericResponseData<List<ClientContextDefinition>> getClientContextDefinitions(
             @PathVariable("clientId") @NotNull Long clientId,
             @RequestParam("tenantId") @NotNull Long tenantId);

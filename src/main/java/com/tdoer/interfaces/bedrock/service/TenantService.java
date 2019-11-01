@@ -32,7 +32,7 @@ import java.util.List;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient(value = "tdoer-core-data")
+@FeignClient(value = "tdoer-bedrock-serviceprovider")
 @RequestMapping("/bedrock/tenant")
 public interface TenantService {
 

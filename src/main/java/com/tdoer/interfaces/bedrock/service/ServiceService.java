@@ -32,21 +32,21 @@ import java.util.List;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient(value = "tdoer-core-data")
+@FeignClient(value = "tdoer-bedrock-serviceprovider")
 @RequestMapping("/bedrock/service")
 public interface ServiceService {
 
     @GetMapping("/definition/byId/{serviceId}")
     GenericResponseData<ServiceDefinition> getServiceDefinition(
-            @PathVariable("serviceId") Long serviceId);
+            @PathVariable("serviceId") @NotNull Long serviceId);
 
-    @GetMapping("/definition/byCode/{serviceId}")
+    @GetMapping("/definition/byCode/{serviceCode}")
     GenericResponseData<ServiceDefinition> getServiceDefinition(
-            @PathVariable("serviceCode") String serviceCode);
+            @PathVariable("serviceCode") @NotBlank String serviceCode);
 
     @GetMapping("/{serviceId}/methods")
     GenericResponseData<List<ServiceMethodDefinition>> getAllServiceMethodDefinitions(
-            @PathVariable("serviceId") Long serviceId);
+            @PathVariable("serviceId") @NotNull Long serviceId);
 
 
     @GetMapping("/{serviceId}/customizedMethodIds")
@@ -56,22 +56,26 @@ public interface ServiceService {
             @RequestParam("productId") @NotNull Long productId,
             @RequestParam("clientId") @NotNull Long clientId,
             @RequestParam("tenantId") @NotNull Long tenantId,
-            @RequestParam("contextPath")  String contextPath);
+            @RequestParam("contextPath") @NotBlank String contextPath);
 
-    @GetMapping("{serviceId}/commonMethodIds")
+    @GetMapping("/{serviceId}/commonMethodIds")
     GenericResponseData<List<Long>> getCommonServiceMethodIds(
             @PathVariable("serviceId") @NotNull Long serviceId);
 
 
-    @GetMapping("{serviceId}/refererClientIds")
-    GenericResponseData<List<Long>> getRefererClientIds(Long serviceId);
+    @GetMapping("/{serviceId}/refererClientIds")
+    GenericResponseData<List<Long>> getRefererClientIds(
+            @PathVariable("serviceId") @NotNull Long serviceId);
 
-    @GetMapping("{serviceId}/refererApplicationIds")
-    GenericResponseData<List<Long>> getRefererApplicationIds(Long serviceId);
+    @GetMapping("/{serviceId}/refererApplicationIds")
+    GenericResponseData<List<Long>> getRefererApplicationIds(
+            @PathVariable("serviceId") @NotNull Long serviceId);
 
-    @GetMapping("{serviceId}/refererServiceIds")
-    GenericResponseData<List<Long>> getRefererServiceIds(Long serviceId);
+    @GetMapping("/{serviceId}/refererServiceIds")
+    GenericResponseData<List<Long>> getRefererServiceIds(
+            @PathVariable("serviceId") @NotNull Long serviceId);
 
-    @GetMapping("{serviceId}/refereeServiceIds")
-    GenericResponseData<List<Long>> getRefereeServiceIds(Long serviceId);
+    @GetMapping("/{serviceId}/refereeServiceIds")
+    GenericResponseData<List<Long>> getRefereeServiceIds(
+            @PathVariable("serviceId") @NotNull Long serviceId);
 }
