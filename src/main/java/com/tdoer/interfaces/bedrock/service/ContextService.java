@@ -15,6 +15,7 @@
  */
 package com.tdoer.interfaces.bedrock.service;
 
+import com.tdoer.bedrock.context.ContextInstance;
 import com.tdoer.bedrock.impl.definition.context.*;
 import com.tdoer.springboot.rest.GenericResponseData;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -53,7 +54,7 @@ public interface ContextService {
             @RequestParam("tenantId") Long tenantId);
 
     @GetMapping("/{contextPath}/instance")
-    GenericResponseData<ContextInstanceDefinition> getContextInstance(
+    GenericResponseData<ContextInstance> getContextInstance(
             @PathVariable("contextPath") @NotBlank String contextPath);
 
     @GetMapping("/{contextPath}/user/{userId}/roles")
