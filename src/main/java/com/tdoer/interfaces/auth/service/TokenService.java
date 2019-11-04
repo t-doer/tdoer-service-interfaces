@@ -31,10 +31,10 @@ import javax.validation.constraints.NotBlank;
  * @create 2017-09-19
  */
 @FeignClient("tdoer-auth")
-@RequestMapping("/auth")
+@RequestMapping("")
 public interface TokenService {
 
-    @GetMapping("/{token}")
+    @GetMapping("/auth/{token}")
     GenericResponseData<OAuth2Authentication> loadAuthentication(
             @PathVariable("token") @NotBlank String token);
 
@@ -42,7 +42,7 @@ public interface TokenService {
     GenericResponseData<OAuth2AccessToken> readAccessToken(
             @PathVariable("token") @NotBlank String token);
 
-    @GetMapping("/refreshToken/{token}")
+    @GetMapping("/token/refresh/{token}")
     GenericResponseData<OAuth2RefreshToken> readRefreshTokenForToken(
             @PathVariable("token") @NotBlank String token);
 }

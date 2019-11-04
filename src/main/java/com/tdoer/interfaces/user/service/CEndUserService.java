@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tdoer.interfaces.auth.service;
+package com.tdoer.interfaces.user.service;
 
 import com.tdoer.bedrock.tenant.BaseUser;
 import com.tdoer.springboot.rest.GenericResponseData;
@@ -26,11 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-
 @FeignClient("tdoer-core-data")
-@RequestMapping("/auth/buser")
-public interface BEndUserService {
-
+@RequestMapping("/user/cuser")
+public interface CEndUserService {
     @GetMapping({"/{tenantId}/{account}"})
     GenericResponseData<BaseUser> findByAccount(
             @PathVariable("tenantId") Long tenantId,
