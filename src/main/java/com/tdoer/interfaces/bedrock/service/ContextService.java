@@ -42,62 +42,52 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/bedrock/context")
 public interface ContextService {
 
-        @GetMapping("/types")
-        public GenericResponseData<List<ContextTypeDefinition>> getAllContextTypes();
+    @GetMapping("/types")
+    public GenericResponseData<List<ContextTypeDefinition>> getAllContextTypes();
 
-        @GetMapping("/{tenantId}/types")
-        public GenericResponseData<List<ContextTypeDefinition>> getContextTypes(
-                        @PathVariable("tenantId") @NonNull Long tenantId);
+    @GetMapping("/{tenantId}/types")
+    public GenericResponseData<List<ContextTypeDefinition>> getContextTypes(
+            @PathVariable("tenantId") @NonNull Long tenantId);
 
-        @GetMapping("/{contextPath}/publicMethods")
-        public GenericResponseData<List<ContextPublicMethodDefinition>> getContextPublicMethods(
-                        @RequestParam("clientId") @NonNull Long clientId,
-                        @RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("contextPath") @NonNull String contextPath);
+    @GetMapping("/{contextPath}/publicMethods")
+    public GenericResponseData<List<ContextPublicMethodDefinition>> getContextPublicMethods(
+            @RequestParam("clientId") @NonNull Long clientId, @RequestParam("tenantId") @NonNull Long tenantId,
+            @PathVariable("contextPath") @NonNull String contextPath);
 
-        @GetMapping("/{contextPath}/role/{roleId}/methods")
-        public GenericResponseData<List<ContextRoleMethodDefinition>> getContextRoleMethods(
-                        @RequestParam("clientId") @NonNull Long clientId,
-                        @RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("contextPath") @NonNull String contextPath,
-                        @PathVariable("roleId") @NonNull Long roleId);
+    @GetMapping("/{contextPath}/role/{roleId}/methods")
+    public GenericResponseData<List<ContextRoleMethodDefinition>> getContextRoleMethods(
+            @RequestParam("clientId") @NonNull Long clientId, @RequestParam("tenantId") @NonNull Long tenantId,
+            @PathVariable("contextPath") @NonNull String contextPath, @PathVariable("roleId") @NonNull Long roleId);
 
-        @GetMapping("/{contextPath}/user/{userId}/roles")
-        public GenericResponseData<List<Long>> getRoleIdsOfUserInContext(
-                        @RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("contextPath") @NonNull String contextPath,
-                        @PathVariable("userId") @NonNull Long userId);
+    @GetMapping("/{contextPath}/user/{userId}/roles")
+    public GenericResponseData<List<Long>> getRoleIdsOfUserInContext(@RequestParam("tenantId") @NonNull Long tenantId,
+            @PathVariable("contextPath") @NonNull String contextPath, @PathVariable("userId") @NonNull Long userId);
 
-        @GetMapping("/context/{instanceId}")
-        public GenericResponseData<ContextInstance> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("instanceId") @NonNull Long instanceId);
+    @GetMapping("/context/{instanceId}")
+    public GenericResponseData<ContextInstance> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
+            @PathVariable("instanceId") @NonNull Long instanceId);
 
-        @GetMapping("/{contextPath}/role/{roleId}/resources")
-        public GenericResponseData<List<ContextRoleResourceDefinition>> getContextRoleResources(
-                        @RequestParam("clientId") @NonNull Long clientId,
-                        @RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("contextPath") @NonNull String contextPath,
-                        @PathVariable("roleId") @NonNull Long roleId);
+    @GetMapping("/{contextPath}/role/{roleId}/resources")
+    public GenericResponseData<List<ContextRoleResourceDefinition>> getContextRoleResources(
+            @RequestParam("clientId") @NonNull Long clientId, @RequestParam("tenantId") @NonNull Long tenantId,
+            @PathVariable("contextPath") @NonNull String contextPath, @PathVariable("roleId") @NonNull Long roleId);
 
-        @GetMapping("/context/byGuid/{guid}")
-        public GenericResponseData<ContextInstance> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("guid") @NonNull String guid);
+    @GetMapping("/context/byGuid/{guid}")
+    public GenericResponseData<ContextInstance> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
+            @PathVariable("guid") @NonNull String guid);
 
-        @GetMapping("/{contextPath}/roles")
-        public GenericResponseData<List<ContextRoleDefinition>> getContextRoles(
-                        @RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("contextPath") @NonNull String contextPath);
+    @GetMapping("/{contextPath}/roles")
+    public GenericResponseData<List<ContextRoleDefinition>> getContextRoles(
+            @RequestParam("tenantId") @NonNull Long tenantId, @PathVariable("contextPath") @NonNull String contextPath);
 
-        @GetMapping("/{contextPath}/publicResources")
-        public GenericResponseData<List<ContextPublicResourceDefinition>> getContextPublicResources(
-                        @RequestParam("clientId") @NonNull Long clientId,
-                        @RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("contextPath") @NonNull String contextPath);
+    @GetMapping("/{contextPath}/publicResources")
+    public GenericResponseData<List<ContextPublicResourceDefinition>> getContextPublicResources(
+            @RequestParam("clientId") @NonNull Long clientId, @RequestParam("tenantId") @NonNull Long tenantId,
+            @PathVariable("contextPath") @NonNull String contextPath);
 
-        @GetMapping("/{contextPath}/applications")
-        public GenericResponseData<List<ContextApplicationDefinition>> getContextApplications(
-                        @RequestParam("clientId") @NonNull Long clientId,
-                        @RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("contextPath") @NonNull String contextPath);
+    @GetMapping("/{contextPath}/applications")
+    public GenericResponseData<List<ContextApplicationDefinition>> getContextApplications(
+            @RequestParam("clientId") @NonNull Long clientId, @RequestParam("tenantId") @NonNull Long tenantId,
+            @PathVariable("contextPath") @NonNull String contextPath);
 
 }
