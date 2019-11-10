@@ -25,11 +25,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 /**
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
+@Service
 public class TenantServiceDelegate implements TenantProvider {
 
     @Autowired

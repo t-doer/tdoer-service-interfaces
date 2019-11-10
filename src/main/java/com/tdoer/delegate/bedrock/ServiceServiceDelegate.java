@@ -21,6 +21,7 @@ import com.tdoer.bedrock.impl.definition.service.ServiceMethodDefinition;
 import com.tdoer.bedrock.impl.provider.ServiceProvider;
 import com.tdoer.interfaces.bedrock.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ import java.util.List;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
+@Service
 public class ServiceServiceDelegate implements ServiceProvider {
 
     @Autowired
