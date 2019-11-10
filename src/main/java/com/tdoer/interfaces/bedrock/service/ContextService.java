@@ -15,18 +15,24 @@
  */
 package com.tdoer.interfaces.bedrock.service;
 
+import java.util.List;
+
 import com.tdoer.bedrock.context.ContextInstance;
-import com.tdoer.bedrock.impl.definition.context.*;
+import com.tdoer.bedrock.impl.definition.context.ContextApplicationDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextPublicMethodDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextPublicResourceDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextRoleDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextRoleMethodDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextRoleResourceDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextTypeDefinition;
 import com.tdoer.springboot.rest.GenericResponseData;
+
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * @author Htinker Hu (htinker@163.com)
@@ -36,30 +42,62 @@ import java.util.List;
 @RequestMapping("/bedrock/context")
 public interface ContextService {
 
-    @GetMapping("/types")
-    GenericResponseData<List<ContextTypeDefinition>> getAllContextTypes();
+        @GetMapping("/types")
+        public GenericResponseData<List<ContextTypeDefinition>> getAllContextTypes();
 
-    @GetMapping("/{contextPath}/applications")
-    GenericResponseData<List<ContextApplicationDefinition>> getContextApplications(
-            @PathVariable("contextPath") @NotBlank String contextPath,
-            @RequestParam("productId") String productId,
-            @RequestParam("clientId") String clientId,
-            @RequestParam("tenantId") Long tenantId);
+        @GetMapping("/{tenantId}/types")
+        public GenericResponseData<List<ContextTypeDefinition>> getContextTypes(
+                        @PathVariable("tenantId") @NonNull Long tenantId);
 
-    @GetMapping("/{contextPath}/roles")
-    GenericResponseData<List<ContextRoleDefinition>> getContextRoles(
-            @PathVariable("contextPath") @NotBlank String contextPath,
-            @RequestParam("productId") String productId,
-            @RequestParam("clientId") String clientId,
-            @RequestParam("tenantId") Long tenantId);
+        @GetMapping("/{contextPath}/publicMethods")
+        public GenericResponseData<List<ContextPublicMethodDefinition>> getContextPublicMethods(
+                        @RequestParam("clientId") @NonNull Long clientId,
+                        @RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("contextPath") @NonNull String contextPath);
 
-    @GetMapping("/{contextPath}/instance")
-    GenericResponseData<ContextInstance> getContextInstance(
-            @PathVariable("contextPath") @NotBlank String contextPath);
+        @GetMapping("/{contextPath}/role/{roleId}/methods")
+        public GenericResponseData<List<ContextRoleMethodDefinition>> getContextRoleMethods(
+                        @RequestParam("clientId") @NonNull Long clientId,
+                        @RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("contextPath") @NonNull String contextPath,
+                        @PathVariable("roleId") @NonNull Long roleId);
 
-    @GetMapping("/{contextPath}/user/{userId}/roles")
-    GenericResponseData<List<ContextRoleDefinition>> getUserRolesInContext(
-            @PathVariable("contextPath") @NotBlank String contextPath,
-            @PathVariable("userId") @NotNull Long userId);
+        @GetMapping("/{contextPath}/user/{userId}/roles")
+        public GenericResponseData<List<Long>> getRoleIdsOfUserInContext(
+                        @RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("contextPath") @NonNull String contextPath,
+                        @PathVariable("userId") @NonNull Long userId);
+
+        @GetMapping("/context/{instanceId}")
+        public GenericResponseData<ContextInstance> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("instanceId") @NonNull Long instanceId);
+
+        @GetMapping("/{contextPath}/role/{roleId}/resources")
+        public GenericResponseData<List<ContextRoleResourceDefinition>> getContextRoleResources(
+                        @RequestParam("clientId") @NonNull Long clientId,
+                        @RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("contextPath") @NonNull String contextPath,
+                        @PathVariable("roleId") @NonNull Long roleId);
+
+        @GetMapping("/context/byGuid/{guid}")
+        public GenericResponseData<ContextInstance> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("guid") @NonNull String guid);
+
+        @GetMapping("/{contextPath}/roles")
+        public GenericResponseData<List<ContextRoleDefinition>> getContextRoles(
+                        @RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("contextPath") @NonNull String contextPath);
+
+        @GetMapping("/{contextPath}/publicResources")
+        public GenericResponseData<List<ContextPublicResourceDefinition>> getContextPublicResources(
+                        @RequestParam("clientId") @NonNull Long clientId,
+                        @RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("contextPath") @NonNull String contextPath);
+
+        @GetMapping("/{contextPath}/applications")
+        public GenericResponseData<List<ContextApplicationDefinition>> getContextApplications(
+                        @RequestParam("clientId") @NonNull Long clientId,
+                        @RequestParam("tenantId") @NonNull Long tenantId,
+                        @PathVariable("contextPath") @NonNull String contextPath);
 
 }

@@ -16,6 +16,7 @@
 package com.tdoer.delegate.bedrock;
 
 import com.tdoer.interfaces.bedrock.service.ContextService;
+import com.tdoer.bedrock.context.ContextInstance;
 import com.tdoer.bedrock.context.ContextPath;
 import com.tdoer.bedrock.impl.definition.context.*;
 import com.tdoer.bedrock.impl.provider.ContextProvider;
@@ -29,47 +30,63 @@ import java.util.List;
  * @create 2017-09-19
  */
 @Service
-public class ContextServiceDelegate  {
+public class ContextServiceDelegate  implements ContextProvider {
 
     @Autowired
     ContextService proxy;
-//
-//    @Override
-//    public List<ContextTypeDefinition> getAllContextTypes() {
-//
-//        return proxy.getAllContextTypes().getData();
-//    }
-//
-//    @Override
-//    public List<ContextApplicationDefinition> getContextApplications(ContextPath contextPath, String productId, String clientId, Long tenantId) {
-//        return proxy.getContextApplications(contextPath.getAbsoluteValue(), productId, clientId, tenantId).getData();
-//    }
-//
-//    @Override
-//    public List<ContextRoleDefinition> getContextRoles(ContextPath contextPath, String productId, String clientId, Long tenantId) {
-//        return proxy.getContextRoles(contextPath.getAbsoluteValue(), productId, clientId, tenantId).getData();
-//    }
-//
-//    @Override
-//    public List<PublicAuthorityDefinition> getPublicAuthorities(ContextPath contextPath, String productId, String clientId, Long tenantId) {
-//        return proxy.getPublicAuthorities(contextPath.getAbsoluteValue(), productId, clientId, tenantId).getData();
-//    }
-//
-//    @Override
-//    public List<ContextRoleAuthorityDefinition> getContextRoleAuthorities(ContextPath contextPath, Long roleId) {
-//
-//        return proxy.getContextRoleAuthorities(contextPath.getAbsoluteValue(), roleId).getData();
-//    }
-//
-//    @Override
-//    public ContextInstanceDefinition getContextInstance(ContextPath contextPath) {
-//
-//        return proxy.getContextInstance(contextPath.getAbsoluteValue()).getData();
-//    }
-//
-//    @Override
-//    public List<ContextRoleDefinition> getUserRolesInContext(ContextPath contextPath, Long userId) {
-//
-//        return proxy.getUserRolesInContext(contextPath.getAbsoluteValue(), userId).getData();
-//    }
+
+    @Override
+    public List<ContextTypeDefinition> getContextTypes(Long tenantId) {
+        return proxy.getContextTypes(tenantId).getData();
+    }
+
+    @Override
+    public List<ContextPublicMethodDefinition> getContextPublicMethods(Long clientId, Long tenantId,
+            ContextPath contextPath) {
+        return proxy.getContextPublicMethods(clientId, tenantId, contextPath.getAbsoluteValue()).getData();
+    }
+
+    @Override
+    public List<ContextRoleMethodDefinition> getContextRoleMethods(Long clientId, Long tenantId,
+            ContextPath contextPath, Long roleId) {
+        return proxy.getContextRoleMethods(clientId, tenantId, contextPath.getAbsoluteValue(), roleId).getData();
+    }
+
+    @Override
+    public List<Long> getRoleIdsOfUserInContext(Long tenantId, ContextPath contextPath, Long userId) {
+        return proxy.getRoleIdsOfUserInContext(tenantId, contextPath.getAbsoluteValue(), userId).getData();
+    }
+
+    @Override
+    public ContextInstance getContextInstance(Long tenantId, Long instanceId) {
+        return proxy.getContextInstance(tenantId, instanceId).getData();
+    }
+
+    @Override
+    public List<ContextRoleResourceDefinition> getContextRoleResources(Long clientId, Long tenantId,
+            ContextPath contextPath, Long roleId) {
+        return proxy.getContextRoleResources(clientId, tenantId, contextPath.getAbsoluteValue(), roleId).getData();
+    }
+
+    @Override
+    public ContextInstance getContextInstance(Long tenantId, String guid) {
+        return proxy.getContextInstance(tenantId, guid).getData();
+    }
+
+    @Override
+    public List<ContextRoleDefinition> getContextRoles(Long tenantId, ContextPath contextPath) {
+        return proxy.getContextRoles(tenantId, contextPath.getAbsoluteValue()).getData();
+    }
+
+    @Override
+    public List<ContextPublicResourceDefinition> getContextPublicResources(Long clientId, Long tenantId,
+            ContextPath contextPath) {
+        return proxy.getContextPublicResources(clientId, tenantId, contextPath.getAbsoluteValue()).getData();
+    }
+
+    @Override
+    public List<ContextApplicationDefinition> getContextApplications(Long clientId, Long tenantId,
+            ContextPath contextPath) {
+        return proxy.getContextApplications(clientId, tenantId, contextPath.getAbsoluteValue()).getData();
+    }
 }
