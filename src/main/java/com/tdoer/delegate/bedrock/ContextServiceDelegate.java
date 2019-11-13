@@ -15,15 +15,23 @@
  */
 package com.tdoer.delegate.bedrock;
 
-import com.tdoer.interfaces.bedrock.service.ContextService;
+import java.util.List;
+
 import com.tdoer.bedrock.context.ContextInstance;
 import com.tdoer.bedrock.context.ContextPath;
-import com.tdoer.bedrock.impl.definition.context.*;
+import com.tdoer.bedrock.context.ContextType;
+import com.tdoer.bedrock.impl.definition.context.ContextApplicationDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextPublicMethodDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextPublicResourceDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextRoleDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextRoleMethodDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextRoleResourceDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextTypeDefinition;
 import com.tdoer.bedrock.impl.provider.ContextProvider;
+import com.tdoer.interfaces.bedrock.service.ContextService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author Htinker Hu (htinker@163.com)
@@ -58,8 +66,8 @@ public class ContextServiceDelegate  implements ContextProvider {
     }
 
     @Override
-    public ContextInstance getContextInstance(Long tenantId, Long instanceId) {
-        return proxy.getContextInstance(tenantId, instanceId).getData();
+    public ContextInstance getContextInstance(Long tenantId, Long contextType, Long instanceId) {
+        return proxy.getContextInstance(tenantId, contextType, instanceId).getData();
     }
 
     @Override
