@@ -40,13 +40,8 @@
     <dependencies>
         <dependency>
             <groupId>com.tdoer</groupId>
-            <artifactId>tdoer-oauth-config</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tdoer</groupId>
-            <artifactId>tdoer-bedrock</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <artifactId>tdoer-security</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.tdoer</groupId>

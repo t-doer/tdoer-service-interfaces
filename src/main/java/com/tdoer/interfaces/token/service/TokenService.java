@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tdoer.interfaces.auth.service;
+package com.tdoer.interfaces.token.service;
 
 import com.tdoer.springboot.rest.GenericResponseData;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -31,18 +31,23 @@ import javax.validation.constraints.NotBlank;
  * @create 2017-09-19
  */
 @FeignClient("tdoer-auth")
-@RequestMapping("")
+@RequestMapping("/token")
 public interface TokenService {
 
     @GetMapping("/auth/{token}")
     GenericResponseData<OAuth2Authentication> loadAuthentication(
             @PathVariable("token") @NotBlank String token);
 
-    @GetMapping("/token/{token}")
+    @GetMapping("/{token}")
     GenericResponseData<OAuth2AccessToken> readAccessToken(
             @PathVariable("token") @NotBlank String token);
 
-    @GetMapping("/token/refresh/{token}")
+    /**
+     * Read stored {@link OAuth2AccessToken} of specific access token
+     * @param token Access token, cannot be blank
+     * @return
+     */
+    @GetMapping("/refresh/{token}")
     GenericResponseData<OAuth2RefreshToken> readRefreshTokenForToken(
             @PathVariable("token") @NotBlank String token);
 }
