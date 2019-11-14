@@ -18,8 +18,11 @@ package com.tdoer.interfaces.config;
 import com.tdoer.bedrock.CloudEnvironment;
 import com.tdoer.bedrock.CloudEnvironmentHolder;
 import com.tdoer.bedrock.PlatformConstants;
+import com.tdoer.security.oauth2.OAuth2Constants;
+import com.tdoer.security.oauth2.common.AccessTokenThreadLocalHolder;
 import feign.Feign;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
@@ -27,6 +30,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
@@ -35,6 +39,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  */
 @Configuration
 @AutoConfigureBefore(FeignAutoConfiguration.class)
+@ConditionalOnClass({Feign.class})
 public class FeignClientAutoConfiguration {
 
     @Bean
@@ -45,6 +50,10 @@ public class FeignClientAutoConfiguration {
             if (env != null) {
                 template.header(PlatformConstants.ENVIRONMENT_DIGEST,
                         env.getDigest().toDigestString());
+            }
+            OAuth2AccessToken accessToken = AccessTokenThreadLocalHolder.getAccessToken();
+            if(accessToken != null){
+                template.header(OAuth2Constants.AUTH_TOKEN, accessToken.getValue());
             }
         });
     }
