@@ -17,8 +17,8 @@ package com.tdoer.interfaces.bedrock.service;
 
 import java.util.List;
 
-import com.tdoer.bedrock.context.ContextInstance;
 import com.tdoer.bedrock.impl.definition.context.ContextApplicationDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextInstanceDefinition;
 import com.tdoer.bedrock.impl.definition.context.ContextPublicMethodDefinition;
 import com.tdoer.bedrock.impl.definition.context.ContextPublicResourceDefinition;
 import com.tdoer.bedrock.impl.definition.context.ContextRoleDefinition;
@@ -69,7 +69,7 @@ public interface ContextService {
                         @PathVariable("userId") @NonNull Long userId);
 
         @GetMapping("/context/{instanceId}")
-        public GenericResponseData<ContextInstance> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
+        public GenericResponseData<ContextInstanceDefinition> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
                         @RequestParam("contextType") @NonNull Long contextType,
                         @PathVariable("instanceId") @NonNull Long instanceId);
 
@@ -81,7 +81,7 @@ public interface ContextService {
                         @PathVariable("roleId") @NonNull Long roleId);
 
         @GetMapping("/context/byGuid/{guid}")
-        public GenericResponseData<ContextInstance> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
+        public GenericResponseData<ContextInstanceDefinition> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
                         @PathVariable("guid") @NonNull String guid);
 
         @GetMapping("/{contextPath}/roles")

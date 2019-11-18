@@ -17,10 +17,13 @@ package com.tdoer.delegate.bedrock;
 
 import java.util.List;
 
+import com.tdoer.bedrock.context.ContextCenter;
 import com.tdoer.bedrock.context.ContextInstance;
 import com.tdoer.bedrock.context.ContextPath;
-import com.tdoer.bedrock.context.ContextType;
+import com.tdoer.bedrock.impl.context.DefaultContextCenter;
+import com.tdoer.bedrock.impl.context.DefaultContextInstance;
 import com.tdoer.bedrock.impl.definition.context.ContextApplicationDefinition;
+import com.tdoer.bedrock.impl.definition.context.ContextInstanceDefinition;
 import com.tdoer.bedrock.impl.definition.context.ContextPublicMethodDefinition;
 import com.tdoer.bedrock.impl.definition.context.ContextPublicResourceDefinition;
 import com.tdoer.bedrock.impl.definition.context.ContextRoleDefinition;
@@ -42,6 +45,8 @@ public class ContextServiceDelegate  implements ContextProvider {
 
     @Autowired
     ContextService proxy;
+    @Autowired
+    ContextCenter contextCenter;
 
     @Override
     public List<ContextTypeDefinition> getContextTypes(Long tenantId) {
@@ -67,7 +72,8 @@ public class ContextServiceDelegate  implements ContextProvider {
 
     @Override
     public ContextInstance getContextInstance(Long tenantId, Long contextType, Long instanceId) {
-        return proxy.getContextInstance(tenantId, contextType, instanceId).getData();
+        ContextInstanceDefinition definition = proxy.getContextInstance(tenantId, contextType, instanceId).getData();
+        return new DefaultContextInstance(definition, (DefaultContextCenter)contextCenter);
     }
 
     @Override
@@ -78,7 +84,8 @@ public class ContextServiceDelegate  implements ContextProvider {
 
     @Override
     public ContextInstance getContextInstance(Long tenantId, String guid) {
-        return proxy.getContextInstance(tenantId, guid).getData();
+        ContextInstanceDefinition definition = proxy.getContextInstance(tenantId, guid).getData();
+        return new DefaultContextInstance(definition, (DefaultContextCenter)contextCenter);
     }
 
     @Override
