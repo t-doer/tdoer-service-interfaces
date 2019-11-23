@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient("tdoer-core-data")
+@FeignClient(name="tdoer-core-data.CEndUserService", url="http://tdoer-core-data")
 @RequestMapping("/user/cuser")
 public interface CEndUserService {
     @GetMapping({"/{tenantId}/{account}"})

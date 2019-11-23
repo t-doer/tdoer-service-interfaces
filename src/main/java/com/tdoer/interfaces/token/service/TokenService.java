@@ -30,7 +30,10 @@ import javax.validation.constraints.NotBlank;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient("tdoer-auth")
+@FeignClient(
+        name="tdoer-auth.TokenService", // unique name
+        url="http://tdoer-auth" // Eureka serviceId
+)
 @RequestMapping("/token")
 public interface TokenService {
 

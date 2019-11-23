@@ -17,7 +17,9 @@ package com.tdoer.interfaces.config;
 
 import com.tdoer.bedrock.CloudEnvironment;
 import com.tdoer.bedrock.CloudEnvironmentHolder;
+import com.tdoer.bedrock.Platform;
 import com.tdoer.bedrock.PlatformConstants;
+import com.tdoer.bedrock.service.Service;
 import com.tdoer.security.oauth2.OAuth2Constants;
 import com.tdoer.security.oauth2.common.AccessTokenThreadLocalHolder;
 import feign.Feign;
@@ -50,6 +52,10 @@ public class FeignClientAutoConfiguration {
             if (env != null) {
                 template.header(PlatformConstants.ENVIRONMENT_DIGEST,
                         env.getDigest().toDigestString());
+            }
+            Service service = Platform.getCurrentService();
+            if(service != null){
+                template.header(PlatformConstants.SERVICE_CODE, service.getCode());
             }
             OAuth2AccessToken accessToken = AccessTokenThreadLocalHolder.getAccessToken();
             if(accessToken != null){

@@ -38,7 +38,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient(value = "tdoer-bedrock-serviceprovider")
+@FeignClient(
+        name="tdoer-bedrock-serviceprovider.ContextService", // unique name
+        url="http://tdoer-bedrock-serviceprovider" // Eureka serviceId
+)
 @RequestMapping("/bedrock/context")
 public interface ContextService {
 

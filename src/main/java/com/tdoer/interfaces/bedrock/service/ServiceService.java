@@ -32,7 +32,10 @@ import java.util.List;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient(value = "tdoer-bedrock-serviceprovider")
+@FeignClient(
+        name="tdoer-bedrock-serviceprovider.ServiceService", // unique name
+        url="http://tdoer-bedrock-serviceprovider" // Eureka serviceId
+)
 @RequestMapping("/bedrock/service")
 public interface ServiceService {
 

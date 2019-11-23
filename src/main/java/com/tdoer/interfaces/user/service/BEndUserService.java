@@ -27,7 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @create 2017-09-19
  */
 
-@FeignClient("tdoer-core-data")
+@FeignClient(
+        name="tdoer-core-data.BEndUserService", // unique name
+        url="http://tdoer-core-data" // Eureka serviceId
+)
 @RequestMapping("/user/buser")
 public interface BEndUserService {
 
