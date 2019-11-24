@@ -26,11 +26,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Htinker Hu (htinker@163.com)
  * @create 2017-09-19
  */
-@FeignClient(name="tdoer-core-data.CEndUserService", url="http://tdoer-core-data")
-@RequestMapping("/user/cuser")
-public interface CEndUserService {
-    @GetMapping({"/{tenantId}/{account}"})
+
+@FeignClient(
+        name="tdoer-core-data.UserService", // unique name
+        url="http://tdoer-core-data" // Eureka serviceId
+)
+@RequestMapping("/user")
+public interface UserServiceFeignClient {
+
+    @GetMapping({"/{tenantId}/account/{account}"})
     GenericResponseData<BaseUser> findByAccount(
             @PathVariable("tenantId") Long tenantId,
             @PathVariable("account") String account);
+
+    @GetMapping({"/{tenantId}/guid/{guid}"})
+    GenericResponseData<BaseUser> findByGuid(
+            @PathVariable("tenantId") Long tenantId,
+            @PathVariable("guid") String guid);
+
+    @GetMapping({"/{tenantId}/id/{userId}"})
+    GenericResponseData<BaseUser> findById(
+            @PathVariable("tenantId") Long tenantId,
+            @PathVariable("userId") Long userId);
 }

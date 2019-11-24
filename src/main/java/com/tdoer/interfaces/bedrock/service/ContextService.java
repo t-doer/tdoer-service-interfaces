@@ -15,24 +15,16 @@
  */
 package com.tdoer.interfaces.bedrock.service;
 
-import java.util.List;
-
-import com.tdoer.bedrock.impl.definition.context.ContextApplicationDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextInstanceDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextPublicMethodDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextPublicResourceDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextRoleDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextRoleMethodDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextRoleResourceDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextTypeDefinition;
+import com.tdoer.bedrock.impl.definition.context.*;
 import com.tdoer.springboot.rest.GenericResponseData;
-
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * @author Htinker Hu (htinker@163.com)
@@ -71,21 +63,12 @@ public interface ContextService {
                         @PathVariable("contextPath") @NonNull String contextPath,
                         @PathVariable("userId") @NonNull Long userId);
 
-        @GetMapping("/context/{instanceId}")
-        public GenericResponseData<ContextInstanceDefinition> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
-                        @RequestParam("contextType") @NonNull Long contextType,
-                        @PathVariable("instanceId") @NonNull Long instanceId);
-
         @GetMapping("/{contextPath}/role/{roleId}/resources")
         public GenericResponseData<List<ContextRoleResourceDefinition>> getContextRoleResources(
                         @RequestParam("clientId") @NonNull Long clientId,
                         @RequestParam("tenantId") @NonNull Long tenantId,
                         @PathVariable("contextPath") @NonNull String contextPath,
                         @PathVariable("roleId") @NonNull Long roleId);
-
-        @GetMapping("/context/byGuid/{guid}")
-        public GenericResponseData<ContextInstanceDefinition> getContextInstance(@RequestParam("tenantId") @NonNull Long tenantId,
-                        @PathVariable("guid") @NonNull String guid);
 
         @GetMapping("/{contextPath}/roles")
         public GenericResponseData<List<ContextRoleDefinition>> getContextRoles(

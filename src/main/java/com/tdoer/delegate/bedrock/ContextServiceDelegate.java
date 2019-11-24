@@ -15,26 +15,19 @@
  */
 package com.tdoer.delegate.bedrock;
 
-import java.util.List;
-
-import com.tdoer.bedrock.context.ContextCenter;
+import com.tdoer.bedrock.Platform;
 import com.tdoer.bedrock.context.ContextInstance;
 import com.tdoer.bedrock.context.ContextPath;
-import com.tdoer.bedrock.impl.context.DefaultContextCenter;
-import com.tdoer.bedrock.impl.context.DefaultContextInstance;
-import com.tdoer.bedrock.impl.definition.context.ContextApplicationDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextInstanceDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextPublicMethodDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextPublicResourceDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextRoleDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextRoleMethodDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextRoleResourceDefinition;
-import com.tdoer.bedrock.impl.definition.context.ContextTypeDefinition;
+import com.tdoer.bedrock.context.ContextType;
+import com.tdoer.bedrock.impl.definition.context.*;
 import com.tdoer.bedrock.impl.provider.ContextProvider;
 import com.tdoer.interfaces.bedrock.service.ContextService;
-
+import com.tdoer.interfaces.user.service.UserService;
+import com.tdoer.utils.id.GUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Htinker Hu (htinker@163.com)
@@ -45,8 +38,9 @@ public class ContextServiceDelegate  implements ContextProvider {
 
     @Autowired
     ContextService proxy;
+
     @Autowired
-    ContextCenter contextCenter;
+    UserService userService;
 
     @Override
     public List<ContextTypeDefinition> getContextTypes(Long tenantId) {
@@ -72,20 +66,31 @@ public class ContextServiceDelegate  implements ContextProvider {
 
     @Override
     public ContextInstance getContextInstance(Long tenantId, Long contextType, Long instanceId) {
-        ContextInstanceDefinition definition = proxy.getContextInstance(tenantId, contextType, instanceId).getData();
-        return new DefaultContextInstance(definition, (DefaultContextCenter)contextCenter);
+        if(contextType.equals(ContextType.TENANT.getType())){
+            return Platform.getRentalCenter().getTenantById(instanceId);
+        }else if(contextType.equals(ContextType.USER.getType())){
+            userService.getUserById(tenantId, instanceId);
+        }
+
+        throw new UnsupportedOperationException("Unsupported context instance of type: " + contextType);
+    }
+
+    @Override
+    public ContextInstance getContextInstance(Long tenantId, String guid) {
+        Long contextType = GUID.parseContextTypeFromContextInstanceGUID(guid);
+        if(contextType.equals(ContextType.TENANT.getType())){
+            return Platform.getRentalCenter().getTenantByGUID(guid);
+        }else if(contextType.equals(ContextType.USER.getType())){
+            return userService.getUserByGuid(tenantId, guid);
+        }
+
+        throw new UnsupportedOperationException("Unsupported context instance of type: " + contextType);
     }
 
     @Override
     public List<ContextRoleResourceDefinition> getContextRoleResources(Long clientId, Long tenantId,
             ContextPath contextPath, Long roleId) {
         return proxy.getContextRoleResources(clientId, tenantId, contextPath.getAbsoluteValue(), roleId).getData();
-    }
-
-    @Override
-    public ContextInstance getContextInstance(Long tenantId, String guid) {
-        ContextInstanceDefinition definition = proxy.getContextInstance(tenantId, guid).getData();
-        return new DefaultContextInstance(definition, (DefaultContextCenter)contextCenter);
     }
 
     @Override
